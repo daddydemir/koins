@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../settings/main_page.dart';
+import '../wallet/wallet_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -14,8 +15,8 @@ class _HomePageState extends State<HomePage> {
 
   // ignore: prefer_final_fields
   List<Widget> _pages =  const [
-    Center(child:Text("Page 0")),
-    Center(child:Text("Page 1")),
+    Center(child: const Text("Page 0")),
+    WalletPage(),
     Center(child:Text("Burası ne bende bilmiyorum!")),
     MainPage(),
   ];

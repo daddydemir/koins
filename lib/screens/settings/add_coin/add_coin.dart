@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:koins/custom/custom_button.dart';
+import 'package:koins/custom/size.dart';
+import '../../../models/my_coins.dart';
+import '../../../data/sql/local_data.dart';
 
 class AddCoinPage extends StatefulWidget {
   const AddCoinPage({super.key});
@@ -9,6 +12,10 @@ class AddCoinPage extends StatefulWidget {
 }
 
 class _AddCoinPageState extends State<AddCoinPage> {
+  var _symbol = TextEditingController();
+  var _name = TextEditingController();
+  var _unit = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,38 +31,24 @@ class _AddCoinPageState extends State<AddCoinPage> {
         title: const Text("Add Coin"),
       ),
       body: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 15).copyWith(top: 15),
+        padding: CustomSize().symetricHorizontal15.copyWith(top: 15),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            const TextField(
-              keyboardType: TextInputType.name,
-              textInputAction: TextInputAction.next,
-              decoration: InputDecoration(
-                  icon: Icon(Icons.currency_bitcoin_rounded),
-                  hintText: "Coin Symbol"),
+            _coinSymbol(),
+            const SizedBox(
+              height: 50,
             ),
-            const SizedBox(height: 50,),
-            const TextField(
-              keyboardType: TextInputType.name,
-              textInputAction: TextInputAction.next,
-              decoration: InputDecoration(
-                hintText: "Coin Name",
-                icon: Icon(Icons.currency_bitcoin_rounded),
-              )
+            _coinName(),
+            const SizedBox(
+              height: 50,
             ),
-            const SizedBox(height: 50,),
-            const TextField(
-              keyboardType: TextInputType.number,
-              textInputAction: TextInputAction.done,
-              decoration: InputDecoration(
-                icon: Icon(Icons.add),
-                hintText:"Coin Units"
-              ),
+            _coinUnit(),
+            const SizedBox(
+              height: 50,
             ),
-            const SizedBox(height: 50,),
             TextButton(
-              onPressed: () {},
+              onPressed: _addCoin,
               child: Text(
                 "Save",
                 style: TextStyle(
@@ -70,5 +63,46 @@ class _AddCoinPageState extends State<AddCoinPage> {
         ),
       ),
     );
+  }
+
+  TextField _coinUnit() {
+    return TextField(
+      controller: _unit,
+      keyboardType: TextInputType.number,
+      textInputAction: TextInputAction.done,
+      decoration:
+          InputDecoration(icon: Icon(Icons.add), hintText: "Coin Units"),
+    );
+  }
+
+  TextField _coinName() {
+    return TextField(
+        controller: _name,
+        keyboardType: TextInputType.name,
+        textInputAction: TextInputAction.next,
+        decoration: InputDecoration(
+          hintText: "Coin Name",
+          icon: Icon(Icons.currency_bitcoin_rounded),
+        ));
+  }
+
+  TextField _coinSymbol() {
+    return TextField(
+      controller: _symbol,
+      keyboardType: TextInputType.name,
+      textInputAction: TextInputAction.next,
+      decoration: InputDecoration(
+          icon: Icon(Icons.currency_bitcoin_rounded), hintText: "Coin Symbol"),
+    );
+  }
+
+  void _addCoin() async {
+    var coin = MyCoins();
+    coin.id = _symbol.text;
+    coin.name = _name.text;
+    coin.units = double.parse(_unit.text);
+   var db = DatabaseHelper();
+   await db.Insert(coin);
+   _symbol.clear(); _name.clear(); _unit.clear();
   }
 }
