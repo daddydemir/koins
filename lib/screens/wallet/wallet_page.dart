@@ -145,6 +145,7 @@ class _WalletPageState extends State<WalletPage> {
                               ),
                             );
                           });
+                      _getMyCoin();
                     },
                     icon: const Icon(Icons.edit, color: Colors.purple),
                     highlightColor: Colors.transparent,

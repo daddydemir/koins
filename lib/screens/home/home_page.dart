@@ -1,4 +1,8 @@
+// ignore_for_file: prefer_final_fields
+
 import 'package:flutter/material.dart';
+import 'package:koins/models/coins_api.dart';
+import 'package:koins/screens/home/main_page.dart';
 
 import '../settings/main_page.dart';
 import '../wallet/wallet_page.dart';
@@ -12,17 +16,19 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   int pageIndex = 0;
+  List<CoinApiModel> liste = <CoinApiModel>[];
 
-  // ignore: prefer_final_fields
-  List<Widget> _pages =  const [
-    Center(child: const Text("Page 0")),
+  List<Widget> _pages = const [
+    MainPageHome(),
     WalletPage(),
-    Center(child:Text("Burası ne bende bilmiyorum!")),
+    Center(child:Text("My Fovarities")),
     MainPage(),
   ];
 
-
-
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -85,10 +91,10 @@ class _HomePageState extends State<HomePage> {
               },
               icon: pageIndex == 2
                   ? const Icon(
-                      Icons.question_mark_outlined,
+                      Icons.favorite_outline_sharp,
                       color: Colors.grey,
                     )
-                  : const Icon(Icons.question_mark_outlined,
+                  : const Icon(Icons.favorite_outline_sharp,
                       color: Colors.white)),
           IconButton(
             highlightColor: Colors.transparent,
@@ -110,4 +116,6 @@ class _HomePageState extends State<HomePage> {
       ),
     );
   }
+
+ 
 }
