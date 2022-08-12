@@ -40,9 +40,16 @@ class DatabaseHelper{
     return result;
   }
 
+  Future Update(MyCoins coin , String data) async {
+    var db = await DB;
+    String update = "Update Coins set id = ? , name = ? , units = ? where id = ?";
+    var result = await db?.rawUpdate(update , [coin.id , coin.name, coin.units , data]);
+    return result;
+  }
+
   Future Delete(String coinId) async {
     var db = await DB;
-    var result = await db?.rawDelete("delete from Coins where id = $coinId");
+    var result = await db?.rawDelete("delete from Coins where id = ?" , [coinId]);
     return result;
   }
 }
