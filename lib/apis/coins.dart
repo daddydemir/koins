@@ -41,4 +41,18 @@ class CoinApi {
     }
     return list;
   }
+
+  GetBtcToUsdt() async {
+    int usd = 1;
+    var url = Uri.parse(baseUrl + "simple/price?ids=bitcoin&vs_currencies=usd");
+    var request = await http.get(url);
+    if (request.statusCode == 200) {
+      var result = json.decode(utf8.decode(request.bodyBytes));
+      var btc = result["bitcoin"];
+      usd = btc["usd"];
+    }else{
+      print("Network Error");
+    }
+    return usd;
+  }
 }

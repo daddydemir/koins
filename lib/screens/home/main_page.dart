@@ -1,7 +1,10 @@
+// ignore_for_file: prefer_interpolation_to_compose_strings
+
 import 'package:flutter/material.dart';
 
 import '../../apis/coins.dart';
 import '../../models/top_coins_api.dart';
+import '../coins/coin_detail.dart';
 
 class MainPageHome extends StatefulWidget {
   const MainPageHome({super.key});
@@ -12,11 +15,13 @@ class MainPageHome extends StatefulWidget {
 
 class _MainPageHomeState extends State<MainPageHome> {
   var list = <Coins>[];
+  late int _usd;
 
   @override
   void initState() {
     super.initState();
     _getTest();
+    _getBtc();
   }
 
   Widget _body(){
@@ -25,12 +30,19 @@ class _MainPageHomeState extends State<MainPageHome> {
       itemBuilder: (BuildContext context,int id){
         return SizedBox(
           height:MediaQuery.of(context).size.height * 0.119,
-          child: Card(
-            elevation: 0,
-            child: ListTile(
-              leading: Image.network(list[id].item!.large.toString()),
-              title: Text(list[id].item!.name ?? ""),
-              trailing: Text(list[id].item!.priceBtc.toString()),
+          child: InkWell(
+            onTap: (){
+              Navigator.push(context, MaterialPageRoute(builder: (context) => CoinDetail(coin:list[id].item ?? Item())));
+            },
+            splashColor: Colors.transparent,
+            highlightColor: Colors.transparent,
+            child: Card(
+              elevation: 0,
+              child: ListTile(
+                leading: Image.network(list[id].item!.large.toString()),
+                title: Text(list[id].item!.name ?? ""),
+                trailing: Text((list[id].item!.priceBtc! * _usd).toStringAsFixed(2) + " \$"),
+              ),
             ),
           ),
         );
@@ -42,6 +54,11 @@ class _MainPageHomeState extends State<MainPageHome> {
     var api = CoinApi();
     list = await api.GetTopCoins();
     setState(() {});
+  }
+
+  _getBtc() async {
+    var api = CoinApi();
+    _usd = await api.GetBtcToUsdt();
   }
 
   @override
