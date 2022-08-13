@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_final_fields, sort_child_properties_last
+
 import 'package:flutter/material.dart';
 import 'package:koins/custom/custom_button.dart';
 import 'package:koins/custom/size.dart';
@@ -49,7 +51,7 @@ class _AddCoinPageState extends State<AddCoinPage> {
             ),
             TextButton(
               onPressed: _addCoin,
-              child: Text(
+              child: const Text(
                 "Save",
                 style: TextStyle(
                   color: Colors.white,
@@ -71,7 +73,7 @@ class _AddCoinPageState extends State<AddCoinPage> {
       keyboardType: TextInputType.number,
       textInputAction: TextInputAction.done,
       decoration:
-          InputDecoration(icon: Icon(Icons.add), hintText: "Coin Units"),
+          const InputDecoration(icon: Icon(Icons.add), hintText: "Coin Units"),
     );
   }
 

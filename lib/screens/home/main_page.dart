@@ -59,6 +59,7 @@ class _MainPageHomeState extends State<MainPageHome> {
   _getBtc() async {
     var api = CoinApi();
     _usd = await api.GetBtcToUsdt();
+    setState((){});
   }
 
   @override
