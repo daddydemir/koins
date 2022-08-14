@@ -1,10 +1,11 @@
-// ignore_for_file: prefer_interpolation_to_compose_strings
+// ignore_for_file: prefer_interpolation_to_compose_strings, non_constant_identifier_names
 
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 
 import '../models/coins_api.dart';
+import '../models/top_100.dart';
 import '../models/top_coins_api.dart';
 
 class CoinApi {
@@ -54,5 +55,22 @@ class CoinApi {
       print("Network Error");
     }
     return usd;
+  }
+
+  GetTop100() async {
+    List<Top100Model> list = [];
+    var url = Uri.parse(baseUrl + "coins/markets?vs_currency=usd&order=market_cap_desc&per_page=100&page=1&sparkline=false");
+    var request = await http.get(url);
+
+    if (request.statusCode == 200){
+       var result = json.decode(utf8.decode(request.bodyBytes));
+       for (var i in result){
+       list.add(Top100Model.fromJson(i));
+       }
+    }
+    else{
+      print("Network Error");
+    }
+    return list;
   }
 }

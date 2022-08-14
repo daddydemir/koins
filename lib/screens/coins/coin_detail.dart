@@ -116,7 +116,7 @@ class _CoinDetailState extends State<CoinDetail> {
                   ),
                   const SizedBox(height:20),
                   Text(
-                      "\$ " + (widget.coin.priceBtc! * _usd).toStringAsFixed(2),
+                      "\$ " + (widget.coin.priceBtc! * _usd).toStringAsFixed(6),
                       style: Theme.of(context).textTheme.titleLarge),
                   const SizedBox(height: 50),
                   const Text(

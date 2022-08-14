@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:koins/models/coins_api.dart';
+import 'package:koins/screens/coins/top_100_coins.dart';
 import 'package:koins/screens/home/main_page.dart';
 
 import '../settings/main_page.dart';
@@ -21,7 +22,7 @@ class _HomePageState extends State<HomePage> {
   List<Widget> _pages = const [
     MainPageHome(),
     WalletPage(),
-    Center(child:Text("My Fovarities")),
+    Top100Coin(),
     MainPage(),
   ];
 
